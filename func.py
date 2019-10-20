@@ -39,3 +39,40 @@ def Jacobi(A,b,E):
     print("Погрешность: ")
     print(error)
     pass
+
+def Seidel(A,b,E):
+    x = np.zeros_like(b)
+    it_count = 0
+    while (True):
+        x_new = np.zeros_like(x)
+        print("Итерация ", it_count, " решение на данной итерации:", x)
+        B =[]
+        for i in range(0,A.shape[0]):
+
+            s1 = np.dot(A[i, :i], x_new[:i])
+            s2 = np.dot(A[i, i + 1:], x[i + 1:])
+            x_new[i] = (b[i] - s1 - s2) / A[i, i]
+            B.insert(i,[s1 / A[i, i], s2 / A[i, i]])
+            B[i].insert(i, 0)
+
+        exit = False
+        if np.linalg.norm(B,np.inf) > 1:
+            exit = True
+            print("Норма больше 1!")
+        for n in range(0, A.shape[0]):
+            if abs(x_new[n] - x[n]) <= E:
+                exit = True
+        if exit == True:
+            break
+        x = x_new
+        it_count += 1
+
+    print()
+    print("Решение системы: ")
+    print(x)
+
+    error = np.dot(A, x) - b
+    print()
+    print("Погрешность: ")
+    print(error)
+    pass
