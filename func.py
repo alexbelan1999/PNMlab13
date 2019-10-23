@@ -23,9 +23,15 @@ def Jacobi(A,b,E):
     while (True):
         x_new = b/maxA
         for i in range(0,A.shape[0]):
+            #print("A[i, :i]: ", A[i, :i])
+            #print("x[:i]: ", x[:i])
             s1 = np.dot(A[i, :i], x[:i])
+            #print("s1: ", s1)
+            #print("A[i, i + 1:]: ", A[i, i + 1:])
+            #print("x[i + 1:]: ", x[i + 1:])
             s2 = np.dot(A[i, i + 1:], x[i + 1:])
-            #print("x_new = " ,b[i]," - ",s1," - ",s2)
+            #print("s2: ", s2)
+            #print("x_new",[i]," = " ,b[i]/ A[i, i]," - ",s1/ A[i, i]," - ",s2/ A[i, i])
             x_new[i] = (b[i] - s1 - s2) / A[i, i]
 
         iter = 0
@@ -60,9 +66,15 @@ def Seidel(A,b,E):
         x_new = b/maxA
         B =[]
         for i in range(0,A.shape[0]):
-
+            #print("A[i, :i]: ", A[i, :i])
+            #print("x_new[:i]: ", x_new[:i])
             s1 = np.dot(A[i, :i], x_new[:i])
+            #print("s1: ", s1)
+            #print("A[i, i + 1:]: ", A[i, i + 1:])
+            #print("x[i + 1:]: ", x[i + 1:])
             s2 = np.dot(A[i, i + 1:], x[i + 1:])
+            #print("s2: ", s2)
+            #print("x_new",[i]," = " ,b[i]/ A[i, i]," - ",s1/ A[i, i]," - ",s2/ A[i, i])
             x_new[i] = (b[i] - s1 - s2) / A[i, i]
             B.insert(i,[s1 / A[i, i], s2 / A[i, i]])
             B[i].insert(i, 0)
